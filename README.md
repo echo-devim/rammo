@@ -5,8 +5,8 @@ RAMMO (RAM-Monitor) is a lightweight program written in C++ to monitor and kill 
 Start it at the beginning of the session and let it keep care of your computer's memory.
 
 The usage is very simple:
-`$ rammo <frequency_monitor> <used_memory_threshold>`
-where `<frequency_monitor>` is the time interval (expressed in seconds) to wait to monitor the current running processes and `<used_memory_threshold>` is the maximum amount of memory (expressed in MB) that a process can use, otherwise it will be killed.
+`$ rammo <frequency_monitor> <memory_threshold>`
+where `<frequency_monitor>` is the time interval (expressed in seconds) to wait to monitor the current running processes and `<memory_threshold>` is the maximum amount of memory (expressed in MB) that a process can use, otherwise it will be killed.
 
 To test if Rammo is working try to run:
 
