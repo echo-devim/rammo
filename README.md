@@ -9,7 +9,9 @@ The usage is very simple:
 where `<frequency_monitor>` is the time interval (expressed in seconds) to wait to monitor the current running processes.
 
 To test if Rammo is working try to run:
+
 `$ for i in {1..999999999}; do echo -n "$i" | sha1sum; done;`
+
 **Attention:** this command will exhaust your memory, unless rammo (or you) kill the bash.
 
 ### License
