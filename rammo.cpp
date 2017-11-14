@@ -42,8 +42,6 @@ struct procinfo get_proc_info(std::string path) {
       pinfo.used_memory = std::stol(line.substr(index, line.length() - index));
     }
   }
-  if ((pinfo.pid == 0) || (pinfo.name == ""))
-    throw std::runtime_error{"Error parsing process " + path + " " + pinfo.name + "\n"}; //pinfo.name could be not empty
   return pinfo;
 }
 
