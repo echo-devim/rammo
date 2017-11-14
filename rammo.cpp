@@ -56,18 +56,18 @@ void block_process(struct procinfo pinfo) {
   }
 }
 
-void monitor(int seconds) {
+void monitor(int seconds, int mem_threshold) {
   bool send_warn_message = true;
   while (true) {
     struct sysinfo sys_info;
     sysinfo(&sys_info);
-    int totalram = sys_info.totalram / 1024; //convertion from byte to Kilobyte
+    //int totalram = sys_info.totalram / 1024; //convertion from byte to Kilobyte
     int freeram = sys_info.freeram / 1024;
     for (const auto& p : std::experimental::filesystem::directory_iterator(PROC_PATH)) {
       if (is_digit(p.path().string().back())) { //Filter all the directories representing processes
         struct procinfo pinfo = get_proc_info(p.path().string());
         //Check for processes with a too high memory usage
-        if (pinfo.used_memory > (totalram/3)) { //probably this condition need to be improved
+        if (pinfo.used_memory > (mem_threshold * 1024)) {
           try {
             block_process(pinfo);
           } catch (const std::exception &e) {
@@ -88,10 +88,11 @@ void monitor(int seconds) {
 }
 
 int main(int argc, char const *argv[]) {
-  if (argc < 2) {
-    std::cout << "Usage:\n" << argv[0] << " <monitor_frequency_in_seconds>\nExample:\n" << argv[0] << " 5\n";
+  if (argc < 3) {
+    std::cout << "Usage:\n" << argv[0] << " <monitor_frequency_in_seconds> <used_memory_threshold>\n"
+	    << "where all the processes that use more than <used_memory_threshold> MB of memory will be killed.\n\nExample:\n" << argv[0] << " 5 1024\n";
     return 0;
   }
-  monitor(std::stoi(argv[1]));
+  monitor(std::stoi(argv[1]), std::stoi(argv[2]));
   return 0;
 }
